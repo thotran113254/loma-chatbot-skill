@@ -72,7 +72,9 @@ Do these in order; verify each step before moving on.
    chatbot_type:'custom', config_patch:{ custom_system_prompt:"<full tailored prompt in the shop's
    language>" } })`. This verbatim prompt IS the custom bot's brain (custom bots don't use Shop Prompt
    V2). Write it with the **"Author the bot prompt"** framework below — role + one goal + consultative
-   spine + literal `BOT:` exemplars — so the bot consults on-process instead of asking randomly.
+   spine + literal `BOT:` exemplars — so the bot consults on-process instead of asking randomly. Do
+   NOT describe tool mechanics here; steer tool usage via `custom_tool_descriptions` (see "Steer tools
+   by their description").
 4. Add the resources the chosen tools need (gated tools only load once their resource exists):
    products (`add_products`), FAQ (`add_faqs`), promotions (`create_promotion`), pricing
    (`create_pricing_rule`), lead schema (`lead_fields` via `update_chatbot_config`).
@@ -145,6 +147,24 @@ Then `get_runtime_preview` to confirm it assembled, and `start_test_conversation
 customer — check the bot asks ≤2 questions, grounds every answer in catalog/FAQ, and reaches the goal
 without rambling. If it drifts, fix the **exemplars** (the `BOT:` lines) first — they drive behavior
 more than abstract rules.
+
+## Steer tools by their description, NOT the prompt (custom bots)
+
+The runtime hands the model every enabled tool as a native function schema (`name`, `description`,
+`parameters`). For a custom bot the assembler injects ONLY the machine contract (output shape + tool
+protocol) + a tiny safety addendum — it does NOT restate what tools do. So do NOT re-describe tools,
+their parameters, or "call X when…" mechanics inside `custom_system_prompt`: that duplicates the
+schema, bloats the static prompt, and dilutes your behavior rules. The model is smart enough to call a
+well-described tool on its own.
+
+Steer WHEN a tool should fire in the shop's domain by overriding its DESCRIPTION, not the prompt:
+`update_chatbot_config({ config_patch:{ custom_tool_descriptions:{ "<tool_name>":"<when/how to use it
+for THIS shop>" } } })`. The override is applied to the live tool schema, co-located with the tool and
+read by the model directly — one concept, one place, no prompt bloat. Keys are tool names from
+`get_enabled_tools.valid_tool_names`; an empty/missing map leaves defaults unchanged. Keep
+`custom_system_prompt` for ROLE + GOAL + SPINE + voice + `BOT:` exemplars only — exemplars that *show*
+a tool used at the right step are behavior and stay (they reference handles/outcomes, not tool docs).
+Confirm both layers with `get_runtime_preview`.
 
 ## Analyze a real conversation → optimize
 
@@ -249,6 +269,8 @@ items) — NOT pasting raw URLs into `custom_system_prompt`.
 - Leads: `lead_fields` (name/label/required/type[, options for select]).
 - Pause on human reply: `admin_pause` enabled/duration/skip-first.
 - Tool allowlist: `set_enabled_tools` (read valid names from `get_enabled_tools.valid_tool_names`).
+- Per-tool steering: `custom_tool_descriptions` (map tool_name→description) overrides the live tool
+  schema so the model knows WHEN to call it — use this instead of describing tools in the prompt.
 
 ## Troubleshooting playbook
 
