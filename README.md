@@ -32,7 +32,7 @@ The MCP server URL is always `LOMA_API_BASE` + `/api/mcp-server`.
 ### Claude Code (terminal)
 
 ```bash
-git clone https://github.com/YOUR-ORG/loma-chatbot-skill.git
+git clone https://github.com/thotran113254/loma-chatbot-skill.git
 cd loma-chatbot-skill
 ./install-claude-code-skill.sh          # project-local  (or --global for all projects)
 ```
