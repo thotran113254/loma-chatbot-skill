@@ -144,13 +144,13 @@ The runtime hands the model every enabled tool as a native function schema (`nam
 `parameters`). For a custom bot the assembler injects ONLY the machine contract (output shape + tool
 protocol) + a tiny safety addendum — it does NOT restate what tools do. So do NOT re-describe tools,
 their parameters, or "call X when…" mechanics inside `custom_system_prompt`: that duplicates the
-schema, bloats the static prompt, and dilutes your behavior rules. The model is smart enough to call a
-well-described tool on its own.
+schema, bloats the static prompt, and dilutes your behavior rules.
 
 Steer WHEN a tool should fire in the shop's domain by overriding its DESCRIPTION, not the prompt:
-`update_chatbot_config({ config_patch:{ custom_tool_descriptions:{ "<tool_name>":"<when/how to use it
-for THIS shop>" } } })`. The override is applied to the live tool schema, co-located with the tool and
-read by the model directly — one concept, one place, no prompt bloat. Keys are tool names from
+`set_tool_descriptions({ chatbot_id, descriptions:{ "<tool_name>":"<when/how to use it for THIS shop>"
+}, mode:"merge" })` (validates tool names; empty string removes an override; `mode:"replace"` sets the
+whole map). The override is applied to the live tool schema, co-located with the tool and read by the
+model directly — one concept, one place, no prompt bloat. Keys are tool names from
 `get_enabled_tools.valid_tool_names`; an empty/missing map leaves defaults unchanged. Keep
 `custom_system_prompt` for ROLE + GOAL + SPINE + voice + `BOT:` exemplars only — exemplars that *show*
 a tool used at the right step are behavior and stay (they reference handles/outcomes, not tool docs).
@@ -184,6 +184,7 @@ wrong / make the bot better":
 | "change how it talks / add a rule" | custom: edit `custom_system_prompt` via `update_chatbot_config`. standard: `refine_shop_prompt` (admin_note) |
 | "bot asks randomly / advises off-topic / can't deliver" | rewrite the prompt with the **Author the bot prompt** framework — role + one goal + ≤2 mapped questions + spine + `BOT:` exemplars + GROUND_IN_TOOLS_ONLY; then re-test |
 | "rewrite the whole prompt" | custom: `update_chatbot_config` `custom_system_prompt`. standard: `update_shop_prompt` (verbatim V2) or `build_shop_prompt` |
+| "tell the bot WHEN to use a tool / it calls the wrong tool" | `set_tool_descriptions` (override the tool's description) — do NOT describe tools in the prompt |
 | "undo the last prompt change" | `get_shop_prompt_history` → `rollback_shop_prompt` |
 | "it's answering too slowly / batching" | `configure_chatbot` `message_delay_seconds` |
 | "let it send images automatically" | `configure_chatbot` media/auto-image knobs; ensure `send_media` enabled |
@@ -259,8 +260,8 @@ items) — NOT pasting raw URLs into `custom_system_prompt`.
 - Leads: `lead_fields` (name/label/required/type[, options for select]).
 - Pause on human reply: `admin_pause` enabled/duration/skip-first.
 - Tool allowlist: `set_enabled_tools` (read valid names from `get_enabled_tools.valid_tool_names`).
-- Per-tool steering: `custom_tool_descriptions` (map tool_name→description) overrides the live tool
-  schema so the model knows WHEN to call it — use this instead of describing tools in the prompt.
+- Per-tool steering: `set_tool_descriptions` (writes `custom_tool_descriptions`) overrides the live
+  tool schema so the model knows WHEN to call it — use this instead of describing tools in the prompt.
 
 ## Troubleshooting playbook
 
