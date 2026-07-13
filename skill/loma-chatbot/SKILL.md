@@ -14,7 +14,8 @@ description: >-
 # Loma Chatbot Operator
 
 You operate a tenant's **Loma** chatbot account through the **Loma MCP server**
-(`<API_BASE>/api/mcp-server`, ~170 tools). Your job: do what a skilled technical staffer would —
+(`<API_BASE>/api/mcp-server`, 170+ tools — call `tools/list` for the live inventory). Your job: do
+what a skilled technical staffer would —
 build, configure, test, launch, and explain — so the customer never has to touch code.
 
 **Scope.** This skill handles building and operating a Loma chatbot via the Loma MCP tools (bot
@@ -250,14 +251,19 @@ items) — NOT pasting raw URLs into `custom_system_prompt`.
 
 ## Configuration knobs cheat-sheet (`configure_chatbot` / `update_chatbot_config`)
 
-- Language/region: `default_language` (`vi`/`en`/`auto`), `country_code`, `timezone`.
-- Reasoning vs cost: `thinking_level` (`minimal`→`high`; higher = smarter + more credits).
+- Language/region: `default_language` (`vi`/`en`/`auto`), `country_code`, `timezone`. UNSET means
+  "system default": an English system frame and the bot mirrors the customer's language — set a value
+  only when the shop explicitly wants one pinned language. Don't write these keys "just in case".
 - Batching: `message_delay_seconds` (2–15 optimal).
 - Search: `max_search_results`, `show_out_of_stock`, `search_hints`, `advanced_search_agent_enabled`.
 - Images: `image_processing_enabled` / `product_cards_enabled` / `product_cards_show_price`. To let the
   bot SEND images, enable the `send_media` tool via `set_enabled_tools`; give it images via `shop_media`.
 - Custom type + `custom_system_prompt`: only via `update_chatbot_config` (not `configure_chatbot`).
-- Leads: `lead_fields` (name/label/required/type[, options for select]).
+- Leads: `lead_fields` (name/label/required/type[, options for select]). Works on ANY bot whose
+  toolset includes `collect_lead` (custom and standard sales included, not just lead_generation):
+  the runtime injects the slot vocabulary and the model saves the customer's wording VERBATIM under
+  your exact keys. The platform never silently creates leads behind the model — if leads are
+  missing, fix the prompt/toolset (the dashboard Overview shows a "capture missed" counter).
 - Pause on human reply: `admin_pause` enabled/duration/skip-first.
 - Tool allowlist: `set_enabled_tools` (read valid names from `get_enabled_tools.valid_tool_names`).
 - Per-tool steering: `set_tool_descriptions` (writes `custom_tool_descriptions`) overrides the live
@@ -276,6 +282,10 @@ items) — NOT pasting raw URLs into `custom_system_prompt`.
   `get_runtime_preview`.
 - **Bot won't send images** → ensure `send_media` is enabled, the reply examples actually show sending
   an image, and the image lives in the `shop_media` catalog referenced by a `shop_media:<id>` handle.
+- **Bot says it has no photo of a product** → that product has no images. Give products/variants an
+  `image_url` (`add_products` / `update_product`) — the bot only offers photos for items that really
+  have them and honestly declines otherwise (by design; it never fabricates an image link). The
+  products dashboard shows a "without photos" badge to find these fast.
 - **Tool seems missing at runtime** → it's gated on a resource (labels/promotions/FAQ/pricing). Create
   the resource first.
 - **Bot says out-of-stock / won't create the order** → the variant is inventory-tracked with zero
