@@ -24,8 +24,9 @@ AI Control. Restart Codex so it loads the `loma` tools, then start a chat: "set 
 # Loma Chatbot Operator
 
 You operate a tenant's **Loma** chatbot account through the **Loma MCP server**
-(`<API_BASE>/api/mcp-server`, 170+ tools — call `tools/list` for the live inventory). Your job: do
-what a skilled technical staffer would —
+(`<API_BASE>/api/mcp-server`, ~170 tools). The catalog surfaces in one of two ways depending on the
+key — directly, or lazily through the **toolbox** meta-tools; see **Connection modes** below before
+you call anything. Your job: do what a skilled technical staffer would —
 build, configure, test, launch, and explain — so the customer never has to touch code.
 
 **Scope.** This skill handles building and operating a Loma chatbot via the Loma MCP tools (bot
@@ -36,7 +37,36 @@ only inside the one location your connector is authenticated to — tenant isola
 **Connect first (one-time).** Attach the Loma MCP connector for your client (Claude.ai, Claude Code,
 ChatGPT, or Codex) using the `<API_BASE>` and the access token from your Loma dashboard → AI Control.
 See the repo `README.md` for per-client steps. If no Loma tools are available, the connector is not
-attached yet — stop and set it up before continuing.
+attached yet — stop and set it up before continuing. (Seeing ONLY `search_tools`, `get_tool_schemas`,
+and `invoke_tool` means you ARE connected — in **toolbox mode**; that's normal, read the next section.)
+
+## Connection modes — direct vs toolbox (check this on connect)
+
+The same catalog reaches you one of two ways, decided by the key your connector uses. Look at what
+`tools/list` exposes right after connecting:
+
+- **Direct mode** — you see the full catalog (~170 named tools). Every tool this skill names is
+  callable directly, exactly as written (`create_chatbot(...)`, `set_enabled_tools(...)`, …). This is
+  what legacy keys, OAuth/desktop sessions, and keys minted with the **`full`** scope get.
+- **Toolbox mode** *(the default for newly-minted API keys — token-efficient, ~0.5k tokens on
+  connect)* — `tools/list` exposes only **3 meta-tools**. The full catalog loads on demand:
+  1. `search_tools({ query })` — find tools by keyword (e.g. `"order"`, `"test conversation"`,
+     `"promotion"`); empty query lists every name. Returns names + one-line summaries.
+  2. `get_tool_schemas({ names:[...] })` — pull exact descriptions + input schemas for up to 8 tools.
+  3. `invoke_tool({ name, arguments })` — run the real tool. **Passthrough:** identical behavior,
+     permissions, tenant isolation, and side effects (mutations mutate for real, test runs spend
+     credits) as a direct call.
+
+**Everything else in this skill — tool names, order, semantics, guardrails — is identical in both
+modes; only the call mechanism differs.** In toolbox mode, wherever a step says *call `X`*, do
+`get_tool_schemas({ names:["X"] })` (or `search_tools` first if unsure of the name) → `invoke_tool({
+name:"X", arguments:{ … } })`. Prefer looking a name up once and caching the schema over re-searching.
+
+**To change a key's mode:** mint the key from **Loma dashboard → AI Control** with the **`full`**
+scope for the direct surface, or leave it default for toolbox. (Keys can also be narrowed to
+capability groups — `setup`, `catalog`, `testing`, `sales_ops`, `channels`, `outreach`,
+`integrations`, `analytics` — which expose only those groups' tools directly.) You cannot change a
+key's scope from inside a chat; it is fixed when the key is created.
 
 ## Mental model (know this cold)
 
@@ -281,6 +311,12 @@ items) — NOT pasting raw URLs into `custom_system_prompt`.
 
 ## Troubleshooting playbook
 
+- **Only `search_tools` / `get_tool_schemas` / `invoke_tool` appear on connect** → not a broken
+  connector: the key is in **toolbox mode** (the default for new keys). Use the lazy workflow
+  (`search_tools` → `get_tool_schemas` → `invoke_tool`) — every tool this skill names still works.
+  For a direct surface, mint a `full`-scope key in Loma dashboard → AI Control. See *Connection modes*.
+- **A tool name from this skill "doesn't exist" as a direct function** → you're likely in toolbox
+  mode; call it via `invoke_tool({ name, arguments })` after `get_tool_schemas`, don't assume it was removed.
 - **`validate_chatbot_config` says shop prompt EMPTY** → custom bot: set `config.custom_system_prompt`
   via `update_chatbot_config`. standard bot: run `build_shop_prompt`.
 - **Custom bot won't activate** → it needs BOTH `config.custom_system_prompt` AND a non-empty

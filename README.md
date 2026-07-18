@@ -25,6 +25,11 @@ The MCP server URL is always `LOMA_API_BASE` + `/api/mcp-server`.
 
 > Never paste your token into a chat message or commit it to git. Use the connector settings only.
 
+**Tool modes (know this once):** newly-minted keys default to **toolbox mode** — token-efficient, the
+AI loads tools on demand via `search_tools` / `get_tool_schemas` / `invoke_tool`. If you want the AI
+to see all ~170 tools directly, create the key with the **`full`** scope on the AI Control page. The
+skill handles both modes automatically; the only difference is how tools are called.
+
 ---
 
 ## 2. Install per platform
