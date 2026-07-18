@@ -210,8 +210,9 @@ wrong / make the bot better":
      via `update_chatbot_config` (custom); add recurring Q&A with `add_faqs`.
    - missing capability → `set_enabled_tools` / `create_http_tool`.
    - follow-up timing / over-messaging → `update_followup_settings` (quiet hours) / scenario edits.
-   - search picking wrong products → `configure_chatbot` search knobs (`search_hints`,
-     `max_search_results`, `advanced_search_agent_enabled`).
+   - search picking wrong products → `configure_chatbot` search knobs (`max_search_results`,
+     `show_out_of_stock`); sharpen matching by modeling attributes — `manage_field_definition`
+     (filterable fields) + `custom_fields` on each product.
    - recurring unknowns → triage `list_tickets` → `resolve_ticket`/`dismiss_ticket`, then curate
      learned answers via `list_resolved_knowledge` → `approve_resolved_knowledge` /
      `update_knowledge_answer`; promote stable Q&A into `add_faqs`.
@@ -295,7 +296,9 @@ items) — NOT pasting raw URLs into `custom_system_prompt`.
   "system default": an English system frame and the bot mirrors the customer's language — set a value
   only when the shop explicitly wants one pinned language. Don't write these keys "just in case".
 - Batching: `message_delay_seconds` (2–15 optimal).
-- Search: `max_search_results`, `show_out_of_stock`, `search_hints`, `advanced_search_agent_enabled`.
+- Search: `max_search_results`, `show_out_of_stock`, `image_processing_enabled` (AI image match).
+  Sharper catalog matching comes from attributes (`manage_field_definition` + `custom_fields`), not a
+  search-hint knob.
 - Images: `image_processing_enabled` / `product_cards_enabled` / `product_cards_show_price`. To let the
   bot SEND images, enable the `send_media` tool via `set_enabled_tools`; give it images via `shop_media`.
 - Custom type + `custom_system_prompt`: only via `update_chatbot_config` (not `configure_chatbot`).
