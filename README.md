@@ -18,10 +18,10 @@ From your **dashboard → Settings → AI Connect**, copy:
 
 | Value | Example |
 |-------|---------|
-| `LOMA_API_BASE` | `https://app.your-domain.com` |
-| `LOMA_MCP_TOKEN` | `<your-mcp-token>` (keep secret) |
+| `MCP_API_BASE` | `https://app.your-domain.com` |
+| `MCP_TOKEN` | `<your-mcp-token>` (keep secret) |
 
-The MCP server URL is always `LOMA_API_BASE` + `/api/mcp-server`.
+The MCP server URL is always `MCP_API_BASE` + `/api/mcp-server`.
 
 > Never paste your token into a chat message or commit it to git. Use the connector settings only.
 
@@ -45,8 +45,8 @@ cd loma-chatbot-skill
 Then add the MCP server (copy `.mcp.json` into your project root) and export your values:
 
 ```bash
-export LOMA_API_BASE="https://app.your-loma-domain.com"
-export LOMA_MCP_TOKEN="<your-mcp-token>"
+export MCP_API_BASE="https://app.your-domain.com"
+export MCP_TOKEN="<your-mcp-token>"
 ```
 
 Start Claude Code and say: **"set up my Loma chatbot"**. The `loma-chatbot` skill auto-activates.
@@ -56,7 +56,7 @@ Start Claude Code and say: **"set up my Loma chatbot"**. The `loma-chatbot` skil
 1. Download `release/loma-chatbot-skill.zip` from this repo.
 2. Claude.ai → **Settings → Capabilities/Skills → Upload skill** → pick the zip.
 3. Add the Loma MCP connector: **Settings → Connectors → Add custom connector** →
-   URL `https://YOUR-API-BASE/api/mcp-server`, header `Authorization: Bearer YOUR_LOMA_MCP_TOKEN`.
+   URL `https://YOUR-API-BASE/api/mcp-server`, header `Authorization: Bearer YOUR_MCP_TOKEN`.
 4. New chat → *"build my chatbot"*.
 
 ### ChatGPT (Custom GPT)
@@ -118,4 +118,4 @@ regenerate the Codex and ChatGPT bundles, and re-zip `release/`.
 
 This skill operates a Loma chatbot account through the Loma MCP tools. It does **not** manage Loma
 server hosting, infrastructure, or other tenants' accounts, and will refuse credential-extraction or
-out-of-scope requests. Your `LOMA_MCP_TOKEN` scopes all access to your own account.
+out-of-scope requests. Your `MCP_TOKEN` scopes all access to your own account.

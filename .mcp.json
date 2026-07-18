@@ -2,9 +2,9 @@
   "mcpServers": {
     "loma": {
       "type": "http",
-      "url": "${LOMA_API_BASE}/api/mcp-server",
+      "url": "${MCP_API_BASE}/api/mcp-server",
       "headers": {
-        "Authorization": "Bearer ${LOMA_MCP_TOKEN}"
+        "Authorization": "Bearer ${MCP_TOKEN}"
       }
     }
   }

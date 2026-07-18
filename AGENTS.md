@@ -10,10 +10,10 @@ Add the Loma MCP server to `~/.codex/config.toml`:
 ```toml
 [mcp_servers.loma]
 url = "https://YOUR-API-BASE/api/mcp-server"
-http_headers = { Authorization = "Bearer YOUR_LOMA_MCP_TOKEN" }
+http_headers = { Authorization = "Bearer YOUR_MCP_TOKEN" }
 ```
 
-Replace `YOUR-API-BASE` and `YOUR_LOMA_MCP_TOKEN` with the values from your dashboard →
+Replace `YOUR-API-BASE` and `YOUR_MCP_TOKEN` with the values from your dashboard →
 Settings → AI Connect. Restart Codex so it loads the `loma` tools, then start a chat: "set up my chatbot".
 
 ---
