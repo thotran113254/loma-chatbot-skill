@@ -14,12 +14,12 @@ client, load this skill, and say *"set up my chatbot"*.
 
 ## 1. Get your connection details (once)
 
-From your **Loma dashboard → AI Control**, copy:
+From your **dashboard → Settings → AI Connect**, copy:
 
 | Value | Example |
 |-------|---------|
-| `LOMA_API_BASE` | `https://app.your-loma-domain.com` |
-| `LOMA_MCP_TOKEN` | `loma_mcp_xxxxxxxxxxxx` (keep secret) |
+| `LOMA_API_BASE` | `https://app.your-domain.com` |
+| `LOMA_MCP_TOKEN` | `<your-mcp-token>` (keep secret) |
 
 The MCP server URL is always `LOMA_API_BASE` + `/api/mcp-server`.
 
@@ -27,7 +27,7 @@ The MCP server URL is always `LOMA_API_BASE` + `/api/mcp-server`.
 
 **Tool modes (know this once):** newly-minted keys default to **toolbox mode** — token-efficient, the
 AI loads tools on demand via `search_tools` / `get_tool_schemas` / `invoke_tool`. If you want the AI
-to see all ~170 tools directly, create the key with the **`full`** scope on the AI Control page. The
+to see all ~170 tools directly, create the key with the **`full`** scope on the AI Connect page. The
 skill handles both modes automatically; the only difference is how tools are called.
 
 ---
@@ -46,7 +46,7 @@ Then add the MCP server (copy `.mcp.json` into your project root) and export you
 
 ```bash
 export LOMA_API_BASE="https://app.your-loma-domain.com"
-export LOMA_MCP_TOKEN="loma_mcp_xxxxxxxxxxxx"
+export LOMA_MCP_TOKEN="<your-mcp-token>"
 ```
 
 Start Claude Code and say: **"set up my Loma chatbot"**. The `loma-chatbot` skill auto-activates.

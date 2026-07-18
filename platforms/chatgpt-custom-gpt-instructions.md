@@ -3,8 +3,8 @@
 Paste everything BELOW the line into your Custom GPT → **Configure → Instructions**. Then attach the
 Loma MCP connector (ChatGPT → Settings → Connectors → add the Loma MCP server URL
 `https://YOUR-API-BASE/api/mcp-server` with header `Authorization: Bearer YOUR_LOMA_MCP_TOKEN`,
-from your Loma dashboard → AI Control). If your plan exposes Actions instead of MCP, import the Loma
-OpenAPI from the same dashboard page.
+from your dashboard → Settings → AI Connect). If your plan exposes Actions instead of MCP, import the
+Loma OpenAPI from the same dashboard page.
 
 ---
 
@@ -25,7 +25,7 @@ infrastructure, billing disputes, or any system outside the connected Loma accou
 only inside the one location your connector is authenticated to — tenant isolation is automatic.
 
 **Connect first (one-time).** Attach the Loma MCP connector for your client (Claude.ai, Claude Code,
-ChatGPT, or Codex) using the `<API_BASE>` and the access token from your Loma dashboard → AI Control.
+ChatGPT, or Codex) using the `<API_BASE>` and the access token from your dashboard → Settings → AI Connect.
 See the repo `README.md` for per-client steps. If no Loma tools are available, the connector is not
 attached yet — stop and set it up before continuing. (Seeing ONLY `search_tools`, `get_tool_schemas`,
 and `invoke_tool` means you ARE connected — in **toolbox mode**; that's normal, read the next section.)
@@ -52,7 +52,7 @@ modes; only the call mechanism differs.** In toolbox mode, wherever a step says 
 `get_tool_schemas({ names:["X"] })` (or `search_tools` first if unsure of the name) → `invoke_tool({
 name:"X", arguments:{ … } })`. Prefer looking a name up once and caching the schema over re-searching.
 
-**To change a key's mode:** mint the key from **Loma dashboard → AI Control** with the **`full`**
+**To change a key's mode:** mint the key from your dashboard's **Settings → AI Connect** with the **`full`**
 scope for the direct surface, or leave it default for toolbox. (Keys can also be narrowed to
 capability groups — `setup`, `catalog`, `testing`, `sales_ops`, `channels`, `outreach`,
 `integrations`, `analytics` — which expose only those groups' tools directly.) You cannot change a
@@ -307,7 +307,7 @@ items) — NOT pasting raw URLs into `custom_system_prompt`.
 - **Only `search_tools` / `get_tool_schemas` / `invoke_tool` appear on connect** → not a broken
   connector: the key is in **toolbox mode** (the default for new keys). Use the lazy workflow
   (`search_tools` → `get_tool_schemas` → `invoke_tool`) — every tool this skill names still works.
-  For a direct surface, mint a `full`-scope key in Loma dashboard → AI Control. See *Connection modes*.
+  For a direct surface, mint a `full`-scope key in your dashboard → Settings → AI Connect. See *Connection modes*.
 - **A tool name from this skill "doesn't exist" as a direct function** → you're likely in toolbox
   mode; call it via `invoke_tool({ name, arguments })` after `get_tool_schemas`, don't assume it was removed.
 - **`validate_chatbot_config` says shop prompt EMPTY** → custom bot: set `config.custom_system_prompt`

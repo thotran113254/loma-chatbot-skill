@@ -13,8 +13,8 @@ url = "https://YOUR-API-BASE/api/mcp-server"
 http_headers = { Authorization = "Bearer YOUR_LOMA_MCP_TOKEN" }
 ```
 
-Replace `YOUR-API-BASE` and `YOUR_LOMA_MCP_TOKEN` with the values from your Loma dashboard →
-AI Control. Restart Codex so it loads the `loma` tools, then start a chat: "set up my chatbot".
+Replace `YOUR-API-BASE` and `YOUR_LOMA_MCP_TOKEN` with the values from your dashboard →
+Settings → AI Connect. Restart Codex so it loads the `loma` tools, then start a chat: "set up my chatbot".
 
 ---
 
