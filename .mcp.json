@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "loma": {
+    "chatbot": {
       "type": "http",
       "url": "${MCP_API_BASE}/api/mcp-server",
       "headers": {

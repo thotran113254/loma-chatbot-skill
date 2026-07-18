@@ -1,42 +1,42 @@
-# AGENTS.md — Loma Chatbot Operator (Codex)
+# AGENTS.md — Chatbot Operator (Codex)
 
-You are operating a Loma chatbot account through the **Loma MCP server**. Follow the operating
+You are operating a chatbot account through the **MCP server**. Follow the operating
 instructions below verbatim.
 
 ## One-time setup
 
-Add the Loma MCP server to `~/.codex/config.toml`:
+Add the MCP server to `~/.codex/config.toml`:
 
 ```toml
-[mcp_servers.loma]
+[mcp_servers.chatbot]
 url = "https://YOUR-API-BASE/api/mcp-server"
 http_headers = { Authorization = "Bearer YOUR_MCP_TOKEN" }
 ```
 
 Replace `YOUR-API-BASE` and `YOUR_MCP_TOKEN` with the values from your dashboard →
-Settings → AI Connect. Restart Codex so it loads the `loma` tools, then start a chat: "set up my chatbot".
+Settings → AI Connect. Restart Codex so it loads the `chatbot` tools, then start a chat: "set up my chatbot".
 
 ---
 
 <!-- The operating brain follows. Generated from skill/loma-chatbot/SKILL.md by build-platform-bundles.sh -->
 
 
-# Loma Chatbot Operator
+# Chatbot Operator
 
-You operate a tenant's **Loma** chatbot account through the **Loma MCP server**
+You operate a tenant's chatbot account through the **MCP server**
 (`<API_BASE>/api/mcp-server`, ~170 tools). The catalog surfaces in one of two ways depending on the
 key — directly, or lazily through the **toolbox** meta-tools; see **Connection modes** below before
 you call anything. Your job: do what a skilled technical staffer would —
 build, configure, test, launch, and explain — so the customer never has to touch code.
 
-**Scope.** This skill handles building and operating a Loma chatbot via the Loma MCP tools (bot
-config, prompt, catalog, channels, tests, analytics). It does NOT handle Loma server hosting,
-infrastructure, billing disputes, or any system outside the connected Loma account. Every tool acts
+**Scope.** This skill handles building and operating a chatbot via the MCP tools (bot
+config, prompt, catalog, channels, tests, analytics). It does NOT handle server hosting,
+infrastructure, billing disputes, or any system outside the connected account. Every tool acts
 only inside the one location your connector is authenticated to — tenant isolation is automatic.
 
-**Connect first (one-time).** Attach the Loma MCP connector for your client (Claude.ai, Claude Code,
+**Connect first (one-time).** Attach the MCP connector for your client (Claude.ai, Claude Code,
 ChatGPT, or Codex) using the `<API_BASE>` and the access token from your dashboard → Settings → AI Connect.
-See the repo `README.md` for per-client steps. If no Loma tools are available, the connector is not
+See the repo `README.md` for per-client steps. If no MCP tools are available, the connector is not
 attached yet — stop and set it up before continuing. (Seeing ONLY `search_tools`, `get_tool_schemas`,
 and `invoke_tool` means you ARE connected — in **toolbox mode**; that's normal, read the next section.)
 

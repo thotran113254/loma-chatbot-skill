@@ -1,14 +1,14 @@
-# Loma Chatbot Skill
+# Chatbot Operator Skill
 
 An AI **skill** that teaches Claude / ChatGPT / Codex how to build, configure, test, and operate a
-**Loma** chatbot for you — end to end, without touching code. Attach the Loma MCP connector to your AI
+chatbot for you — end to end, without touching code. Attach the MCP connector to your AI
 client, load this skill, and say *"set up my chatbot"*.
 
 - **What it is:** one portable instruction set (`skill/loma-chatbot/SKILL.md`) + ready-to-paste
   bundles for each AI platform + an MCP connector template.
 - **What it controls:** your bot's prompt, tools, products, FAQ, promotions, pricing, channels
-  (website / Zalo / TikTok), tests against the real runtime, and analytics — via ~170 Loma MCP tools.
-- **Tenant-safe:** every action runs only inside the Loma account your token authenticates to.
+  (website / Zalo / TikTok), tests against the real runtime, and analytics — via ~170 MCP tools.
+- **Tenant-safe:** every action runs only inside the account your token authenticates to.
 
 ---
 
@@ -49,13 +49,13 @@ export MCP_API_BASE="https://app.your-domain.com"
 export MCP_TOKEN="<your-mcp-token>"
 ```
 
-Start Claude Code and say: **"set up my Loma chatbot"**. The `loma-chatbot` skill auto-activates.
+Start Claude Code and say: **"set up my chatbot"**. The `loma-chatbot` skill auto-activates.
 
 ### Claude.ai (web / desktop)
 
 1. Download `release/loma-chatbot-skill.zip` from this repo.
 2. Claude.ai → **Settings → Capabilities/Skills → Upload skill** → pick the zip.
-3. Add the Loma MCP connector: **Settings → Connectors → Add custom connector** →
+3. Add the MCP connector: **Settings → Connectors → Add custom connector** →
    URL `https://YOUR-API-BASE/api/mcp-server`, header `Authorization: Bearer YOUR_MCP_TOKEN`.
 4. New chat → *"build my chatbot"*.
 
@@ -63,12 +63,12 @@ Start Claude Code and say: **"set up my Loma chatbot"**. The `loma-chatbot` skil
 
 1. Open `platforms/chatgpt-custom-gpt-instructions.md`.
 2. Copy everything below the `---` line into your Custom GPT → **Configure → Instructions**.
-3. Attach the Loma MCP connector (or import the Loma OpenAPI as an Action) — see the file header.
+3. Attach the MCP connector (or import the platform OpenAPI as an Action) — see the file header.
 
 ### Codex
 
 1. Copy `AGENTS.md` to the root of the workspace where you run Codex.
-2. Add the Loma MCP server to `~/.codex/config.toml` (snippet is inside `AGENTS.md`).
+2. Add the MCP server to `~/.codex/config.toml` (snippet is inside `AGENTS.md`).
 3. Run Codex and say: *"set up my chatbot"*.
 
 ### Any other MCP client
@@ -116,6 +116,6 @@ regenerate the Codex and ChatGPT bundles, and re-zip `release/`.
 
 ## Scope & privacy
 
-This skill operates a Loma chatbot account through the Loma MCP tools. It does **not** manage Loma
+This skill operates a chatbot account through the MCP tools. It does **not** manage
 server hosting, infrastructure, or other tenants' accounts, and will refuse credential-extraction or
 out-of-scope requests. Your `MCP_TOKEN` scopes all access to your own account.
