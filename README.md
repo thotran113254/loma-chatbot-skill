@@ -99,6 +99,7 @@ loma-chatbot-skill/
 ├── README.md                                  ← you are here
 ├── skill/loma-chatbot/SKILL.md                ← canonical skill (source of truth)
 ├── AGENTS.md                                  ← Codex bundle (generated)
+├── skill/loma-open-platform-integrator/SKILL.md  ← developer skill: build EXTERNAL automations (REST + webhooks + proactive send)
 ├── platforms/
 │   ├── chatgpt-custom-gpt-instructions.md     ← ChatGPT paste bundle (generated)
 │   ├── codex-header.md                        ← header used to build AGENTS.md
@@ -111,6 +112,19 @@ loma-chatbot-skill/
 
 Maintainers: edit **only** `skill/loma-chatbot/SKILL.md`, then run `./build-platform-bundles.sh` to
 regenerate the Codex and ChatGPT bundles, and re-zip `release/`.
+
+---
+
+## For developers — Open Platform Integrator skill
+
+`skill/loma-open-platform-integrator/SKILL.md` is a second, developer-facing skill: it teaches a
+coding agent (Claude Code, Codex, Cursor) how to build YOUR OWN system on top of the platform —
+mint scoped API keys, call the REST API v1, subscribe HMAC-signed webhooks (including
+`conversation_started` and per-message `message_received`), send proactive messages and assign
+labels back into conversations (`conversations:write`), declare HTTP tools the bot can call
+mid-conversation, and generate production-real test traffic through the web-widget public API.
+The installer above installs both skills; load whichever matches the task (operate the bot vs.
+integrate with it).
 
 ---
 
