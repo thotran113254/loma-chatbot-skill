@@ -107,11 +107,12 @@ loma-chatbot-skill/
 ├── .mcp.json                                  ← MCP connector template
 ├── install-claude-code-skill.sh              ← Claude Code installer
 ├── build-platform-bundles.sh                 ← regenerate AGENTS.md + ChatGPT bundle from SKILL.md
-└── release/loma-chatbot-skill.zip            ← upload to Claude.ai
+├── release/loma-chatbot-skill.zip            ← operator skill, upload to Claude.ai
+└── release/loma-open-platform-integrator-skill.zip ← developer skill, upload to Claude.ai
 ```
 
 Maintainers: edit **only** `skill/loma-chatbot/SKILL.md`, then run `./build-platform-bundles.sh` to
-regenerate the Codex and ChatGPT bundles, and re-zip `release/`.
+regenerate the Codex and ChatGPT bundles, and re-zip `release/` (one zip per skill folder: `<skill-name>/SKILL.md` at the zip root).
 
 ---
 
