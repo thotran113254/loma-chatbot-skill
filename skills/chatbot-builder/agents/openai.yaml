@@ -1,0 +1,21 @@
+# OpenAI-specific skill metadata (ChatGPT desktop app / Codex).
+# Ignored by Claude clients, which read SKILL.md only.
+interface:
+  display_name: "Chatbot Builder"
+  short_description: "Create, prompt, test and launch a chatbot through the MCP connector."
+  default_prompt: "Build my chatbot: pick tools, load my products, write the prompt, test it, then launch."
+
+policy:
+  # Auto-activation is the point: a shop owner says "build my bot", not "$chatbot-builder".
+  # Verified 260726 on Codex 0.145: allow_implicit_invocation=false hides the skill entirely
+  # (it is not injected, not searchable). Safety comes from MCP tool approvals + the
+  # guardrails in SKILL.md, never from hiding the skill.
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "chatbot"
+      description: "Chatbot platform MCP server — replace the URL with your own MCP_API_BASE from the dashboard (Settings -> AI Connect) and authenticate with your MCP token."
+      transport: "streamable_http"
+      url: "https://REPLACE-WITH-YOUR-API-BASE/api/mcp-server"
