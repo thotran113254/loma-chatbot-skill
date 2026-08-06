@@ -107,9 +107,10 @@ Use `.mcp.json` as the connector template and load `skills/chatbot-builder/SKILL
 Say what you want; the skill drives the tools in order:
 
 pick which customer questions the bot should answer (it shows you a numbered menu — you reply with
-numbers) → create or reuse the bot → pick its tools → load products / FAQ / images → write the prompt
-body → validate → preview the assembled prompt → **test through the real runtime** → bind a channel to go
-live → hand over to ops for monitoring.
+numbers) → confirm the chat outcome, escalation route, and one grounded sample dialog → create or reuse
+the bot → pick its tools → load products / FAQ / images → compile the Shop Prompt V2 body → validate →
+preview the assembled prompt → **test through the real runtime** → bind a channel to go live → hand over
+to ops for monitoring.
 
 A page bot is most effective when it owns the 15–25 questions customers actually repeat; anything else it
 files as a ticket for you, and once you answer, the bot learns it for next time.
@@ -117,8 +118,9 @@ files as a ticket for you, and once you answer, the bot learns it for next time.
 A bot is live or silent purely through its **channel binding** — there is no separate on/off switch on
 the bot, so nothing goes out to customers until you connect a channel.
 
-Testing runs the same pipeline as a real customer, so a passing test is real evidence. Test orders are
-real and consume credits.
+Testing uses isolated `is_test` traffic through the same runtime pipeline, so a passing test is strong
+evidence without contacting a real customer. Credits and test-side writes, including test orders, can
+still be real; confirm before running a case with a side effect.
 
 ## Repository layout
 

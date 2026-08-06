@@ -81,8 +81,8 @@ smart model wants to ask them.
    preset lists it.
 3. Turn the surviving fields into FLOW steps — one field per step, each with a literal quoted line in
    the shop's language (see `custom-bot-prompt-blueprint.md`).
-4. Write the forbidden questions into the tail block's `ASK_ONLY_FLOW_FIELDS` line only if the shop
-   keeps seeing them; the FLOW plus that rule is normally enough.
+4. Add only merchant-confirmed limits to the fresh body when the shop keeps seeing them; the flow plus
+   that specific limit is normally enough.
 5. Verify with acceptance case 5 (an off-brief consulting request must not start an interview).
 
 ## When the shop insists on more questions

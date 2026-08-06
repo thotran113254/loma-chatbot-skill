@@ -4,7 +4,13 @@ A page bot earns its keep by answering the **15–25 questions customers actuall
 everything else to a human fast. Coverage of the repeats beats cleverness on the rare ones.
 
 So the job is not "understand this business". It is: **pick the cases this shop wants answered, collect
-only the data those cases consume, and wire the rest to escalation.**
+only the data those cases consume, and wire the rest to escalation.** Keep the result as a short
+working brief, not a dump of marketing copy.
+
+The brief must make seven decisions visible: the outcome, answer sources, flow toward the outcome,
+policy answers, limits, escalation, and voice. Outcome and escalation are mandatory. If the merchant
+chooses to drop another decision, state what the bot will no longer answer or do. Offer a proposed
+choice plus a short WHY, then let the merchant confirm or edit it.
 
 Scope note: this file is what *you* ask the **shop owner**. What the finished **bot** may ask the
 **customer** is capped separately — see `vertical-ask-sets.md`.
@@ -35,7 +41,10 @@ gets built in one sitting instead of three.
 case ask the one missing fact, in one batch, and never ask for anything no ticked case consumes.
 "Bot không tự trả lời" cases need no data at all — they need an escalation route.
 
-Then build, and say plainly which cases are covered and which go to a human.
+Before the first build, prepare one merchant-approved multi-turn sample (about eight customer turns)
+with at least one grounded answer, the intended flow, and one unknown-question handoff. The sample is
+a behavior reference, not a generic transcript. Then build, and say plainly which cases are covered
+and which go to a human.
 
 ## Case → where the answer lives (this is the whole design)
 
