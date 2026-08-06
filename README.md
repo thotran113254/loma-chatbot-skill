@@ -153,7 +153,8 @@ reference under 300 lines, and never duplicate content between a SKILL.md and it
 The repository also ships `skill/loma-open-platform-integrator/SKILL.md`, a developer-facing
 playbook for external REST, webhook, proactive-message, conversation-label, and HTTP-tool
 integrations. It is separate from the customer chatbot Builder/Ops skills and is not included in
-the two chatbot upload bundles.
+the two chatbot upload bundles; upload `release/loma-open-platform-integrator-skill.zip` separately
+when you need the developer integration playbook.
 
 ## Scope & privacy
 
