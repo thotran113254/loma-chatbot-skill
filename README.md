@@ -120,7 +120,7 @@ the bot, so nothing goes out to customers until you connect a channel.
 
 Testing uses isolated `is_test` traffic through the same runtime pipeline, so a passing test is strong
 evidence without contacting a real customer. Credits and test-side writes, including test orders, can
-still be real; confirm before running a case with a side effect.
+still be real; get explicit confirmation before starting any test session.
 
 ## Repository layout
 
@@ -145,10 +145,15 @@ skills/
 install.sh                                         ← claude-code | codex installer
 build-release-bundles.sh                           ← zips for Claude.ai / ChatGPT upload
 AGENTS.md                                          ← pointer for Codex setups without skill support
+skill/loma-open-platform-integrator/SKILL.md       ← external REST/webhook integration playbook
 ```
 
 Maintainers: the `SKILL.md` files are the source of truth. Keep each under 300 lines, keep each
 reference under 300 lines, and never duplicate content between a SKILL.md and its references.
+The repository also ships `skill/loma-open-platform-integrator/SKILL.md`, a developer-facing
+playbook for external REST, webhook, proactive-message, conversation-label, and HTTP-tool
+integrations. It is separate from the customer chatbot Builder/Ops skills and is not included in
+the two chatbot upload bundles.
 
 ## Scope & privacy
 

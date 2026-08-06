@@ -17,7 +17,7 @@ missing product, and a product edit cannot cure a rambling flow.
 | Asked questions the shop can't act on / interviewed the customer | prompt flow | narrow to the vertical ask-set; one field per step (→ chatbot-builder) |
 | Re-asked something the customer already said | prompt flow | add the confirmed no-repeat requirement and an approved sample line, then compile a fresh body |
 | Answered off-topic then pivoted into qualifying questions | prompt limits | add the shop's confirmed off-topic limit and re-test it |
-| Echoed English status text into a local-language reply | prompt/tool handling | add the shop-language handling requirement to the body or tool description |
+| Echoed English status text into a local-language reply | runtime addendum/loadout | inspect the runtime preview and enabled tools; this system-owned rule is not a body or tool-description fix |
 | Called the wrong tool, or too eagerly | tool descriptions | `set_tool_descriptions` for that tool — not the prompt |
 | Order not created though everything was given | tools / stock | order tool missing from the tool set, or the variant is unsellable; check the transcript for a tool error |
 | Contact was given but no lead appears | tools / prompt | contact-capture tool not enabled, or the body never asks for contact. Nothing creates leads behind the model |
@@ -36,8 +36,9 @@ missing product, and a product edit cannot cure a rambling flow.
 4. **Change quoted lines before abstract rules.** The runtime imitates the literal customer-facing
    lines in the flow far more strongly than it follows a rule about them.
 5. **Confirm the fix in production shape**, not in theory: isolated `is_test` traffic runs the same
-   pipeline without contacting a real customer, so a passing test is strong evidence. Credits and
-   test-side writes can still be real. `validate_chatbot_config` passing is not enough.
+   pipeline without contacting a real customer, so a passing test is strong evidence. Every test
+   consumes credits and test-side writes can still be real; get explicit confirmation before starting
+   the session. `validate_chatbot_config` passing is not enough.
 6. **Undo cleanly:** `get_shop_prompt_history` → `rollback_shop_prompt` restores the previous body.
 
 ## Escalating honestly

@@ -51,10 +51,26 @@ language; do not turn it into a loose interview.
 - Keep customer-facing lines in the shop's language. Keep tool names and platform mechanics out of the
   body.
 
+## Response discipline — required for every custom bot
+
+A custom bot has no persona frame. Its V2 body MUST finish with a short section, in the shop's
+language and no more than six one-line requirements, that covers all of these:
+
+- Answer what the customer asked first, then take one next step.
+- Ask at most one question in a reply.
+- Speak as the shop's staff, without assistant filler or hedging.
+- Never send an empty reply; acknowledge unclear input and repeat the current step.
+- Decline off-topic requests briefly, without turning them into a qualification interview.
+- Use a real name already known in the conversation naturally, without asking again.
+
+This required section is different from system-owned tool correctness and safety rules. Keep it once,
+at the end of the body, and write it naturally for the shop rather than copying these English words.
+
 ## Review before writing
 
 - [ ] Every factual line traces to the merchant or a shop data source.
 - [ ] The outcome, escalation route, and one-question flow are unambiguous.
+- [ ] A custom body ends with the required response-discipline section.
 - [ ] Examples reflect real shop wording; they do not contain fabricated facts.
 - [ ] Data belongs in catalog/FAQ/media, and tool timing belongs in tool descriptions.
 - [ ] The body has no setup transcript, placeholder, copied generic vertical, or stale accumulated text.

@@ -56,9 +56,11 @@ stop and set it up.
   order discipline, media discipline, tool-result truth, price/stock presentation, provenance, item
   referencing. Enabled tools are handed to the model as native schemas.
 - **What the merchant still owns**: shop-specific reply tone, flow, limits, addressing, and handoff
-  choices. Do not paste a universal rule block; put only confirmed requirements and approved example
-  lines in the V2 body. The platform's generated frame and tool-gated rules handle the mechanics it
-  owns. Use `references/custom-bot-prompt-blueprint.md` to check the boundary.
+  choices. A custom bot runs without the persona frame, so its V2 body MUST end with a short
+  shop-language response-discipline section: answer-first, one question at a time, staff voice,
+  non-empty replies, a brief off-topic decline, and natural use of a known name. The system still owns
+  tool mechanics and safety addenda; do not duplicate those. Use
+  `references/custom-bot-prompt-blueprint.md` to check the boundary.
 - **Test sessions use the production runtime but are isolated test traffic.** `send_test_message`
   runs the same webhook → queue → worker → agent path with `is_test=true`, not in a real customer
   thread. A passing test is strong behavior evidence; test orders, labels, and credits can still be
@@ -158,8 +160,9 @@ Do these in order; verify each before moving on.
    content (e.g. `MCP error … Invalid arguments`) rather than an exception, so read what `send_test_message`
    returned before polling; and an idle or brand-new session reports `status:"complete"` with
    `messages: []`, so treat a reply as arrived only when `messages` is non-empty.
-   Run the acceptance set below. This needs no channel or activation, but credits and test-side writes
-   (such as test orders or labels) remain real; confirm before running a case with a side effect.
+   Run the acceptance set below. This needs no channel or activation, but every test session consumes
+   credits and test-side writes (such as test orders or labels) remain real. Get explicit confirmation
+   before starting any test session.
 9. **Go live** — bind a real channel: `create_website_channel` + `activate_bot_on_channel`, or
    `link_zalo_channel` / `link_tiktok_channel` + `activate_bot_on_channel`. That binding is the moment
    the bot starts answering customers. Then hand over to **chatbot-ops** for monitoring.
@@ -207,7 +210,7 @@ if you skipped them, say so in plain words instead of implying the bot was verif
 | says it has no photo | that product genuinely has no `image_url` — add one; it will not fabricate a link |
 | ignores a confirmed behavior | put one specific requirement at the end of the fresh body, then re-test it |
 | calls the wrong tool / at the wrong time | `set_tool_descriptions`, not the prompt |
-| echoes English status text into a local-language reply | add the shop-language handling requirement to the body or tool description |
+| echoes English status text into a local-language reply | inspect the runtime preview and enabled-tool loadout; the system tool-output addendum owns this, so do not duplicate it in body or tool descriptions |
 | a tool you expect is missing at runtime | it is resource-gated (labels/promotions/FAQ/pricing) — create the resource first |
 | only a few meta-tools visible | toolbox mode, not a fault → `references/connection-and-tool-modes.md` |
 
